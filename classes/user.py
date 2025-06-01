@@ -37,7 +37,7 @@ class User():
         role = self.get_role()
         name = self.get_name()
         data_in.append({"user_id": id, "role": role, "name": name})
-        print(data_in)
+        return data_in
         
     
     def load_user_data(self, catalog, users_data):
