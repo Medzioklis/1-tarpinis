@@ -1,13 +1,9 @@
-# pradedam
-from classes.user import User
+from functions.menu import display_main_menu
 
-# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
-users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+def main():
+    display_main_menu()
 
-user = User(users_file_location)
-users = user.collect_data()
-for ele in users:
-    print(ele)
+main()
 
 
 
