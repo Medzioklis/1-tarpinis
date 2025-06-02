@@ -1,16 +1,14 @@
 # pradedam
 from classes.user import User
 
-catalog = "D:/AI studijos/1 tarpinis/data"  # namu kompe kelias iki data
-users_data = "users.pickle"
+# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
+users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
 
-user = User()
-data = user.load_user_data(catalog, users_data)
-data = user.collect_data()
-user.save_user_data(catalog, users_data, data)
-# users = user.load_user_data(catalog, users_data)
-# for ele in users:
-#     print(ele)
+user = User(users_file_location)
+users = user.collect_data()
+for ele in users:
+    print(ele)
+
 
 
 # from functions import login
