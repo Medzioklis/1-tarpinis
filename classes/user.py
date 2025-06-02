@@ -10,6 +10,7 @@ class User():
         self.user_id = user_id
         self.role = role
         self.name = name
+        os.makedirs(os.path.dirname(users_file_location) or ".", exist_ok=True) # chekinam ar tikrai egzistuoja failas ir jo lokacija
 
     def get_user_id(self):
         user_id = int(datetime.now().timestamp())
@@ -26,7 +27,7 @@ class User():
     
     def get_name(self):
         while True:
-            name = input("Įveskite vardą ir pavardę: ")
+            name = input("Įveskite vardą ir pavardę: ").strip() # su strip pasalinam tarpus pradzioje ir gale jei netycia jie buvo
             if name != "":
                 break
             else:
@@ -56,6 +57,7 @@ class User():
     
     def collect_data(self):
         data = self.load_user_data()
+
         user_data = {
             "user_id": self.get_user_id(),
             "role": self.get_role(),
