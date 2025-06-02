@@ -4,8 +4,8 @@ from datetime import datetime
 
 from classes.user import User
 
-# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
-users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
+# users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
 
 def load_user_data():
     try:
@@ -17,7 +17,7 @@ def load_user_data():
         print("Failas nerastas!")
         return []
     except Exception:
-        print("Klaida nuskaitant")
+        print("Klaida nuskaitant arba nėra duomenų")
         return []
     
 def save_user_data(users):
@@ -31,7 +31,8 @@ def save_user_data(users):
 users = load_user_data()
 
 def get_user_id():
-    user_id = int(datetime.now().timestamp())
+    user_id_int = int(datetime.now().timestamp())
+    user_id = str(user_id_int)
     return user_id
 
 def get_role():
@@ -75,29 +76,26 @@ def get_user_by_id(user_id):
             return user
     return None
 
-def update_user_info(user_id, name=None, password=None, role=None):
+def update_user_info(user_id, name=None, password=None):
     user = get_user_by_id(user_id)
     if user:
         if name:
             user.name = name
         if password:
             user.password = password
-        if role == "skaitytojas" or role =="bibliotekininkas":
-            user.role = role
-        else:
-            print("Kadangi neteisingai priskyrėte rolę, suteiksime pagal nutylėjimą skaitytojo rolę")
-            user.role = "skaitytojas"
         save_user_data(users)
-    print(f"Vartotojas su ID: {user_id} nerastas")
+    else:
+        print(f"Vartotojas su ID: {user_id} nerastas")
         
 def delete_user(user_id):
     global users
-    original_len = len(users)
-    users = [user for user in users if user.user_id != user_id]
-    if len(users) < original_len:
+    original_len = len(users)                                   # nustatom saraso vartotoju skaiciu (ilgi)
+    users = [user for user in users if user.user_id != user_id] # sukuria naują sąrašą users, į kurį įtraukiami tie vartotojai, kurių user_id nesutampasu tuo kurį norime ištrinti
+    if len(users) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad vartotojas istrintas ir galima is naujo isaugoti sarasa
         save_user_data(users)
         print(f"Vartotojas su ID: {user_id} ištrintas.")
-    print(f"Vartotojas su ID {user_id} nerastas.")
+    else:
+        print(f"Vartotojas su ID {user_id} nerastas.")
 
 def list_all_users():
     return users
