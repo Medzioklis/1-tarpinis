@@ -1,7 +1,10 @@
 import functions.library as lib
 
+current_user = None
+
 def login_menu():
     while True:
+        global current_user
         user_id = input("Įveskite savo ID: ")
         password = input("Įveskite savo slaptažodį: ")
 
@@ -23,6 +26,7 @@ def login_menu():
             break
         else:
             print("Neteisingas ID arba slaptažodis. Bandykite dar kartą")
+        return current_user
 
 
 def librarian_menu():
@@ -32,7 +36,7 @@ def librarian_menu():
         print("2. Atnaujinti vartotojo duomenis")
         print("3. Ištrinti vartotoją")
         print("4. Peržiūrėti vartotojų sąrašą")
-        print("0. Atsijungti")
+        print("0. Baigti darbą")
         
         choice = int(input("Įveskite savo pasirinkimą: "))
 
@@ -46,36 +50,33 @@ def librarian_menu():
             case 4:
                 list_users_menu()
             case 0:
-                print("Išėjome iš programos")
+                print("Išėjote iš programos")
                 exit()
             case _:
                 print("Klaida. Bandykite dar kartą.")
 
-# def reader_menu():
-#     """Skaitytojo meniu."""
-#     while True:
-#         print("\n--- Skaitytojo Meniu ---")
-#         print("1. Peržiūrėti savo duomenis")
-#         print("0. Atsijungti")
-#         choice = input("Įveskite savo pasirinkimą: ")
+def reader_menu():
+    while True:
+        print("\n--- Skaitytojo Meniu ---")
+        print("1. Peržiūrėti savo duomenis")
+        print("0. Baigti darbą")
+        choice = int(input("Įveskite savo pasirinkimą: "))
 
-#         if choice == '1':
-#             view_my_data()
-#         elif choice == '0':
-#             global current_user
-#             current_user = None
-#             print("Atsijungta.")
-#             break
-#         else:
-#             print("Neteisingas pasirinkimas. Bandykite dar kartą.")
+        match choice:
+            case 1:
+                view_my_data()
+            case 0:
+                print("Išėjote iš programos.")
+                exit()
+            case _:
+                print("Neteisingas pasirinkimas. Bandykite dar kartą.")
 
-# def view_my_data():
-#     """Peržiūrėti prisijungusio vartotojo duomenis."""
-#     if current_user:
-#         print("\n--- Jūsų duomenys ---")
-#         print(current_user)
-#     else:
-#         print("Nėra prisijungusio vartotojo.")
+def view_my_data():
+    if current_user:
+        print("\n--- Jūsų duomenys ---")
+        print(current_user)
+    else:
+        print("Nėra prisijungusio vartotojo.")
 
 def create_user_menu():
     print("\n--- Kuriame naują vartotoją ---")
