@@ -41,6 +41,7 @@ def librarian_menu():
         print("6. Atnaujinti knygą sąraše")
         print("7. Ištrinti knygą")
         print("8. Peržiūrėti knygų sąrašą")
+        print("9. Knygos paieška")
         print("0. Baigti darbą")
         
         choice = int(input("Įveskite savo pasirinkimą: "))
@@ -62,6 +63,8 @@ def librarian_menu():
                 delete_book()
             case 8:
                 list_books()
+            case 9:
+                search_book()
             case 0:
                 print("Išėjote iš programos")
                 exit()
@@ -150,7 +153,13 @@ def create_book():
         else:
             print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
     book_release = input("Įveskite knygos išleidimo metus: (2005): ")
-    lib.create_book(book_title, book_author, book_genre, book_release)
+    while True:
+        try:
+            book_unit = int(input("Įveskite kiek tokių knygų turime: "))
+            break
+        except ValueError:
+            print("Įveskite vienetų skaičių")
+    lib.create_book(book_title, book_author, book_genre, book_release, book_unit)
 
 def list_books():
     print("\n---------- Visos knygos --------")
@@ -161,7 +170,7 @@ def list_books():
             print(book)
         print("-" * 150)
     else:
-        print("Nėra registruotų vartotojų.")
+        print("Nėra įvestų knygų.")
 
 def update_book():
     print("\n--- Atnaujiname knygos duomenis ---")
@@ -178,13 +187,20 @@ def update_book():
                 break
             else:
                 print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
-        book_release = int(input(f"Naujas žanrasleidimo metai (dabar: {book_to_update.book_release}): "))
+        book_release = int(input(f"Nauji leidimo metai (dabar: {book_to_update.book_release}): "))
+        while True:
+            try:
+                book_unit = int(input(f"Atnaujinkite vnt., skaičių (privaloma) (dabar yra: {book_to_update.book_unit} vnt.): "))
+                break
+            except ValueError:
+                print("Įveskite vienetų skaičių")
 
         lib.update_book_info(book_id, 
                              book_title if book_title else None,
                              book_author if book_author else None,
                              book_genre if book_genre else None,
-                             book_release if book_release else None)
+                             book_release if book_release else None,
+                             book_unit if book_unit else None)
     else:
         print(f"Knyga kurios ID: '{book_id}' nerasta.")
 
@@ -192,3 +208,16 @@ def delete_book():
     print("\n--- Ištriname knygą ---")
     book_id = input("Įveskite knygos ID, kurią norite ištrinti: ")
     lib.delete_book(book_id)
+
+def search_book():
+    print("\n-------- Knygos paieška ----------")
+    search_input = input("Įveskite knygos pavadinimą ar autorių: ")
+    found_books_list = lib.get_book_by_search(search_input)
+
+    if found_books_list:
+        print("\nRastos knygos:")
+        for book in found_books_list:
+            print("-" * 150)
+            print(f"Knygos ID: {book.book_id}, pavadinimas: {book.book_title}, autorius: {book.book_author}, žanras: {book.book_genre}, sandėlyje: {book.book_unit} vnt.")
+    else:
+        print(f"Knyga su pavadinimu ar autoriumi, atitinkančiu '{search_input}', nerasta.")

@@ -5,10 +5,10 @@ from datetime import datetime
 from classes.user import User
 from classes.book import Book
 
-# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
-# books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
-users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
-books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
+users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
+books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
+# users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+# books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
 
 def load_user_data():
     try:
@@ -20,7 +20,7 @@ def load_user_data():
         print("Failas nerastas!")
         return []
     except Exception:
-        print("Klaida nuskaitant arba nėra duomenų")
+        print("Vartotojų sąrašas tuščias")
         return []
     
 def save_user_data(users):
@@ -79,12 +79,6 @@ def get_user_by_id(user_id):
             return user
     return None
 
-def get_book_by_id(book_id):
-    for book in books:
-        if book.book_id == book_id:
-            return book
-    return None
-
 def update_user_info(user_id, name=None, password=None):
     user = get_user_by_id(user_id)
     if user:
@@ -129,7 +123,7 @@ def load_books_data():
         print("Failas nerastas!")
         return []
     except Exception:
-        print("Klaida nuskaitant arba nėra duomenų")
+        print("Knygų sąrašas tuščias")
         return []
     
 def save_books_data(books):
@@ -142,18 +136,24 @@ def save_books_data(books):
 
 books = load_books_data()
 
-def create_book(book_title, book_author, book_genre, book_release):
+def create_book(book_title, book_author, book_genre, book_release, book_unit):
     book_id = get_id()
-    new_book = Book(book_id, book_title, book_author, book_genre, book_release)
+    new_book = Book(book_id, book_title, book_author, book_genre, book_release, book_unit)
     books.append(new_book)
     save_books_data(books)
-    print(f"Knygos ID: {new_book.book_id}, pavadinimas: {new_book.book_title}, autorius: {new_book.book_author}, žanras: {new_book.book_genre}, leidinio metai: {new_book.book_release}")
+    print(f"Knygos ID: {new_book.book_id}, pavadinimas: {new_book.book_title}, autorius: {new_book.book_author}, žanras: {new_book.book_genre}, leidinio metai: {new_book.book_release}, sandelyje: {new_book.book_unit} vnt.")
     return new_book
 
 def list_all_books():
     return books
 
-def update_book_info(book_id, book_title=None, book_author=None, book_genre=None, book_release=None):
+def get_book_by_id(book_id):
+    for book in books:
+        if book.book_id == book_id:
+            return book
+    return None
+
+def update_book_info(book_id, book_title=None, book_author=None, book_genre=None, book_release=None, book_unit=None):
     book = get_book_by_id(book_id)
     if book:
         if book_title:
@@ -164,12 +164,14 @@ def update_book_info(book_id, book_title=None, book_author=None, book_genre=None
             book.book_genre = book_genre
         if book_release:
             book.book_release = book_release
+        if book_unit:
+            book.book_unit = book_unit
         save_books_data(books)
     else:
         print(f"Knyga su ID: {book_id} nerasta")
 
 def delete_book(book_id):
-    books = load_books_data()
+    global books
     original_len = len(books)                                   # nustatom saraso iteraciju skaiciu (ilgi)
     books = [book for book in books if book.book_id != book_id] # sukuria naują sąrašą books, į kurį įtraukiamos tos knygos, kurių book_id nesutampa su tuo kuri norime ištrinti
     if len(books) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad knyga istrinta ir galima is naujo isaugoti sarasa
@@ -177,3 +179,11 @@ def delete_book(book_id):
         print(f"Knyga su ID: {book_id} ištrinta")
     else:
         print(f"Knyga su ID: {book_id} nerasta")
+
+def get_book_by_search(search_input):
+    found_books = []
+    for book in books:
+        if book.book_title == search_input or book.book_author == search_input:
+            found_books.append(book)
+    return found_books
+    
