@@ -146,7 +146,7 @@ def create_book(book_title, book_author, book_genre, book_release):
     book_id = get_id()
     new_book = Book(book_id, book_title, book_author, book_genre, book_release)
     books.append(new_book)
-    save_user_data(books)
+    save_books_data(books)
     print(f"Knygos ID: {new_book.book_id}, pavadinimas: {new_book.book_title}, autorius: {new_book.book_author}, žanras: {new_book.book_genre}, leidinio metai: {new_book.book_release}")
     return new_book
 
@@ -164,11 +164,12 @@ def update_book_info(book_id, book_title=None, book_author=None, book_genre=None
             book.book_genre = book_genre
         if book_release:
             book.book_release = book_release
-        save_user_data(books)
+        save_books_data(books)
     else:
         print(f"Knyga su ID: {book_id} nerasta")
 
 def delete_book(book_id):
+    books = load_books_data()
     original_len = len(books)                                   # nustatom saraso iteraciju skaiciu (ilgi)
     books = [book for book in books if book.book_id != book_id] # sukuria naują sąrašą books, į kurį įtraukiamos tos knygos, kurių book_id nesutampa su tuo kuri norime ištrinti
     if len(books) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad knyga istrinta ir galima is naujo isaugoti sarasa

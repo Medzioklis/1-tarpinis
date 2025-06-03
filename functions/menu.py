@@ -95,7 +95,12 @@ def create_user():
     print("\n--- Kuriame naują vartotoją ---")
     name = input("Įveskite vardą ir pavardę: ")
     password = input("Įveskite slaptažodį: ")
-    role = input("Įveskite rolę (skaitytojas ar bibliotekininkas): ").lower()
+    while True:
+        role = input("Įveskite rolę (skaitytojas ar bibliotekininkas): ").lower()
+        if role == "skaitytojas" or role == "bibliotekininkas":
+            break
+        else:
+            print(f"Neteisingai įvedėte rolę {role}. Bandykite dar kartą")
     lib.create_user(name, password, role)
 
 def update_user():
@@ -138,7 +143,12 @@ def create_book():
     print("\n--- Pridedame naują knygą ---")
     book_title = input("Įveskite knygos pavadinimą: ")
     book_author = input("Įveskite knygos autorių: ")
-    book_genre = input("Įveskite knygos žanrą:(romanas, detektyvas, fantastika, biografija): ").lower()
+    while True:
+        book_genre = input("Įveskite knygos žanrą:(romanas, detektyvas, fantastika, biografija): ").lower()
+        if book_genre == "detektyvas" or book_genre == "romanas" or book_genre == "fantastika" or book_genre == "biografija":
+            break
+        else:
+            print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
     book_release = input("Įveskite knygos išleidimo metus: (2005): ")
     lib.create_book(book_title, book_author, book_genre, book_release)
 
@@ -159,11 +169,16 @@ def update_book():
     book_to_update = lib.get_book_by_id(book_id)
 
     if book_to_update:
-        print(f"Atnaujinama knyga: {book_to_update.title}, jei nenorite kurios nors reikšmės keisti palikite tuščią")
-        book_title = input(f"Naujas pavadinimas (dabar: {book_to_update.title}): ")
-        book_author = input(f"Naujas autorius (dabar: {book_to_update.author}): ")
-        book_genre = input(f"Naujas žanras (dabar: {book_to_update.genre}): ")
-        book_release = int(input(f"Naujas žanrasleidimo metai (dabar: {book_to_update.release}): "))
+        print(f"Atnaujinama knyga: {book_to_update.book_title}, jei nenorite kurios nors reikšmės keisti palikite tuščią")
+        book_title = input(f"Naujas pavadinimas (dabar: {book_to_update.book_title}): ")
+        book_author = input(f"Naujas autorius (dabar: {book_to_update.book_author}): ")
+        while True:
+            book_genre = input(f"Naujas žanras (dabar: {book_to_update.book_genre}): ").lower()
+            if book_genre == "detektyvas" or book_genre == "romanas" or book_genre == "fantastika" or book_genre == "biografija" or book_genre == "":
+                break
+            else:
+                print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
+        book_release = int(input(f"Naujas žanrasleidimo metai (dabar: {book_to_update.book_release}): "))
 
         lib.update_book_info(book_id, 
                              book_title if book_title else None,
