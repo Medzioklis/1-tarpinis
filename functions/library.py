@@ -1,7 +1,6 @@
 import pickle
 import os
 from datetime import datetime
-import uuid
 
 from classes.user import User
 from classes.book import Book
@@ -34,10 +33,10 @@ def save_user_data(users):
 
 users = load_user_data()
 
-def get_user_id():
-    user_id_int = int(datetime.now().timestamp())
-    user_id = str(user_id_int)
-    return user_id
+def get_id():
+    id_int = int(datetime.now().timestamp())
+    id = str(id_int)[3:]
+    return id
 
 def get_role():
     while True:
@@ -67,7 +66,7 @@ def get_password():
     return password
 
 def create_user(name, password, role):
-    user_id = get_user_id()
+    user_id = get_id()
     new_user = User(user_id, name, password, role)
     users.append(new_user)
     save_user_data(users)
@@ -78,6 +77,12 @@ def get_user_by_id(user_id):
     for user in users:
         if user.user_id == user_id:
             return user
+    return None
+
+def get_book_by_id(book_id):
+    for book in books:
+        if book.book_id == book_id:
+            return book
     return None
 
 def update_user_info(user_id, name=None, password=None):
@@ -137,12 +142,8 @@ def save_books_data(books):
 
 books = load_books_data()
 
-def get_book_id():
-    book_id = str(uuid.uuid4())
-    return book_id
-
 def create_book(book_title, book_author, book_genre, book_release):
-    book_id = get_book_id()
+    book_id = get_id()
     new_book = Book(book_id, book_title, book_author, book_genre, book_release)
     books.append(new_book)
     save_user_data(books)
@@ -151,3 +152,27 @@ def create_book(book_title, book_author, book_genre, book_release):
 
 def list_all_books():
     return books
+
+def update_book_info(book_id, book_title=None, book_author=None, book_genre=None, book_release=None):
+    book = get_book_by_id(book_id)
+    if book:
+        if book_title:
+            book.book_title = book_title
+        if book_author:
+            book.book_author = book_author
+        if book_genre:
+            book.book_genre = book_genre
+        if book_release:
+            book.book_release = book_release
+        save_user_data(books)
+    else:
+        print(f"Knyga su ID: {book_id} nerasta")
+
+def delete_book(book_id):
+    original_len = len(books)                                   # nustatom saraso iteraciju skaiciu (ilgi)
+    books = [book for book in books if book.book_id != book_id] # sukuria naują sąrašą books, į kurį įtraukiamos tos knygos, kurių book_id nesutampa su tuo kuri norime ištrinti
+    if len(books) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad knyga istrinta ir galima is naujo isaugoti sarasa
+        save_books_data(books)
+        print(f"Knyga su ID: {book_id} ištrinta")
+    else:
+        print(f"Knyga su ID: {book_id} nerasta")

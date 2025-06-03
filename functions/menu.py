@@ -38,7 +38,9 @@ def librarian_menu():
         print("4. Peržiūrėti vartotojų sąrašą")
         print("\n------ Knygų valdymas ----------")
         print("5. Pridėti naują knygą")
-        print("9. Peržiūrėti knygų sąrašą")
+        print("6. Atnaujinti knygą sąraše")
+        print("7. Ištrinti knygą")
+        print("8. Peržiūrėti knygų sąrašą")
         print("0. Baigti darbą")
         
         choice = int(input("Įveskite savo pasirinkimą: "))
@@ -54,7 +56,11 @@ def librarian_menu():
                 list_users()
             case 5:
                 create_book()
-            case 9:
+            case 6:
+                update_book()
+            case 7:
+                delete_book()
+            case 8:
                 list_books()
             case 0:
                 print("Išėjote iš programos")
@@ -146,3 +152,28 @@ def list_books():
         print("-" * 150)
     else:
         print("Nėra registruotų vartotojų.")
+
+def update_book():
+    print("\n--- Atnaujiname knygos duomenis ---")
+    book_id = input("Įveskite knygos ID, kurią norite atnaujinti: ")
+    book_to_update = lib.get_book_by_id(book_id)
+
+    if book_to_update:
+        print(f"Atnaujinama knyga: {book_to_update.title}, jei nenorite kurios nors reikšmės keisti palikite tuščią")
+        book_title = input(f"Naujas pavadinimas (dabar: {book_to_update.title}): ")
+        book_author = input(f"Naujas autorius (dabar: {book_to_update.author}): ")
+        book_genre = input(f"Naujas žanras (dabar: {book_to_update.genre}): ")
+        book_release = int(input(f"Naujas žanrasleidimo metai (dabar: {book_to_update.release}): "))
+
+        lib.update_book_info(book_id, 
+                             book_title if book_title else None,
+                             book_author if book_author else None,
+                             book_genre if book_genre else None,
+                             book_release if book_release else None)
+    else:
+        print(f"Knyga kurios ID: '{book_id}' nerasta.")
+
+def delete_book():
+    print("\n--- Ištriname knygą ---")
+    book_id = input("Įveskite knygos ID, kurią norite ištrinti: ")
+    lib.delete_book(book_id)
