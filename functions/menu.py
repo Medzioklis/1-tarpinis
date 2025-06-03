@@ -75,12 +75,15 @@ def reader_menu():
     while True:
         print("\n--- Skaitytojo Meniu ---")
         print("1. Peržiūrėti savo duomenis")
+        print("2. Knygos paieška")
         print("0. Baigti darbą")
         choice = int(input("Įveskite savo pasirinkimą: "))
 
         match choice:
             case 1:
                 view_my_data()
+            case 2:
+                search_book()
             case 0:
                 print("Išėjote iš programos.")
                 exit()
@@ -195,12 +198,7 @@ def update_book():
             except ValueError:
                 print("Įveskite vienetų skaičių")
 
-        lib.update_book_info(book_id, 
-                             book_title if book_title else None,
-                             book_author if book_author else None,
-                             book_genre if book_genre else None,
-                             book_release if book_release else None,
-                             book_unit if book_unit else None)
+        lib.update_book_info(book_id, book_title if book_title else None, book_author if book_author else None, book_genre if book_genre else None, book_release if book_release else None, book_unit if book_unit else None)
     else:
         print(f"Knyga kurios ID: '{book_id}' nerasta.")
 
