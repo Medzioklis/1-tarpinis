@@ -1,11 +1,15 @@
 import pickle
 import os
 from datetime import datetime
+import uuid
 
 from classes.user import User
+from classes.book import Book
 
-users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
-# users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
+# books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
+users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
 
 def load_user_data():
     try:
@@ -105,3 +109,45 @@ def authenticate_user(user_id, password):
     if user and user.password == password:
         return user
     return None
+
+# --------------------------------------------------------------
+# ---------------- Knygos funkcijos ----------------------------
+# --------------------------------------------------------------
+
+def load_books_data():
+    try:
+        with open(books_file_location, "rb") as file:
+            data = pickle.load(file)
+        print("Duomenys nuskaityti")
+        return data
+    except FileNotFoundError:
+        print("Failas nerastas!")
+        return []
+    except Exception:
+        print("Klaida nuskaitant arba nėra duomenų")
+        return []
+    
+def save_books_data(books):
+    try:
+        with open(books_file_location, "wb") as file:
+            pickle.dump(books, file)
+            print("Duomenys įrašyti")
+    except Exception as e:
+        print(f"Klaida: {e}")
+
+books = load_books_data()
+
+def get_book_id():
+    book_id = str(uuid.uuid4())
+    return book_id
+
+def create_book(book_title, book_author, book_genre, book_release):
+    book_id = get_book_id()
+    new_book = Book(book_id, book_title, book_author, book_genre, book_release)
+    books.append(new_book)
+    save_user_data(books)
+    print(f"Knygos ID: {new_book.book_id}, pavadinimas: {new_book.book_title}, autorius: {new_book.book_author}, žanras: {new_book.book_genre}, leidinio metai: {new_book.book_release}")
+    return new_book
+
+def list_all_books():
+    return books

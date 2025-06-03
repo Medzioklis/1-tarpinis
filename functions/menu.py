@@ -31,24 +31,31 @@ def login_menu():
 
 def librarian_menu():
     while True:
-        print("\n------ Valdyti Vartotojus ------")
+        print("\n------ Vartotojų valdymas ------")
         print("1. Sukurti naują vartotoją")
         print("2. Atnaujinti vartotojo duomenis")
         print("3. Ištrinti vartotoją")
         print("4. Peržiūrėti vartotojų sąrašą")
+        print("\n------ Knygų valdymas ----------")
+        print("5. Pridėti naują knygą")
+        print("9. Peržiūrėti knygų sąrašą")
         print("0. Baigti darbą")
         
         choice = int(input("Įveskite savo pasirinkimą: "))
 
         match choice:
             case 1:
-                create_user_menu()
+                create_user()
             case 2:
-                update_user_menu()
+                update_user()
             case 3:
-                delete_user_menu()
+                delete_user()
             case 4:
-                list_users_menu()
+                list_users()
+            case 5:
+                create_book()
+            case 9:
+                list_books()
             case 0:
                 print("Išėjote iš programos")
                 exit()
@@ -78,14 +85,14 @@ def view_my_data():
     else:
         print("Nėra prisijungusio vartotojo.")
 
-def create_user_menu():
+def create_user():
     print("\n--- Kuriame naują vartotoją ---")
     name = input("Įveskite vardą ir pavardę: ")
     password = input("Įveskite slaptažodį: ")
     role = input("Įveskite rolę (skaitytojas ar bibliotekininkas): ").lower()
     lib.create_user(name, password, role)
 
-def update_user_menu():
+def update_user():
     print("\n--- Atnaujiname vartotojo duomenis ---")
     user_id = input("Įveskite vartotojo ID, kurį norite atnaujinti: ")
     user_to_update = lib.get_user_by_id(user_id)
@@ -101,12 +108,12 @@ def update_user_menu():
     else:
         print(f"Vartotojas kurio ID: '{user_id}' nerastas.")
 
-def delete_user_menu():
+def delete_user():
     print("\n--- Ištriname vartotoją ---")
     user_id = input("Įveskite vartotojo ID, kurį norite ištrinti: ")
     lib.delete_user(user_id)
 
-def list_users_menu():
+def list_users():
     print("\n--- Visi vartotojai ---")
     users = lib.list_all_users()
     if users:
@@ -117,4 +124,25 @@ def list_users_menu():
     else:
         print("Nėra registruotų vartotojų.")
 
-        
+# -------------------------------------------------------------------------
+# -------------------------- Knygos valdymas ------------------------------
+#--------------------------------------------------------------------------
+
+def create_book():
+    print("\n--- Pridedame naują knygą ---")
+    book_title = input("Įveskite knygos pavadinimą: ")
+    book_author = input("Įveskite knygos autorių: ")
+    book_genre = input("Įveskite knygos žanrą:(romanas, detektyvas, fantastika, biografija): ").lower()
+    book_release = input("Įveskite knygos išleidimo metus: (2005): ")
+    lib.create_book(book_title, book_author, book_genre, book_release)
+
+def list_books():
+    print("\n---------- Visos knygos --------")
+    books = lib.list_all_books()
+    if books:
+        for book in books:
+            print("-" * 150)
+            print(book)
+        print("-" * 150)
+    else:
+        print("Nėra registruotų vartotojų.")
