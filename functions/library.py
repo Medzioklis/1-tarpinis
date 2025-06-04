@@ -4,11 +4,14 @@ from datetime import datetime
 
 from classes.user import User
 from classes.book import Book
+from classes.basket import Basket
 
 # users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
 # books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
+# baskets_file_location = "D:/AI studijos/1 tarpinis/data/baskets.pickle" # namu kompe kelias iki data
 users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
 books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
+baskets_file_location = "D:/AI studijos/1-tarpinis/data/baskets.pickle" # darbo kompe kelias iki data
 
 def load_user_data():
     try:
@@ -190,3 +193,71 @@ def get_book_by_search(search_input):
 def get_books_by_years(year_input):
     found_books = [book for book in books if int(book.book_release) <= int(year_input)]
     return found_books
+
+# --------------------------------------------------------------
+# ---------------- Krepselio funkcijos -------------------------
+# --------------------------------------------------------------
+
+def load_baskets_data():
+    try:
+        with open(baskets_file_location, "rb") as file:
+            data = pickle.load(file)
+        print("Duomenys nuskaityti")
+        return data
+    except FileNotFoundError:
+        print("Failas nerastas!")
+        return []
+    except Exception:
+        print("Krepšelių sąrašas tuščias")
+        return []
+    
+def save_baskets_data(baskets):
+    try:
+        with open(baskets_file_location, "wb") as file:
+            pickle.dump(baskets, file)
+            print("Duomenys įrašyti")
+    except Exception as e:
+        print(f"Klaida: {e}")
+
+baskets = load_baskets_data()
+
+def get_book_by_title(book_title):
+    for book in books:
+        if book.book_title == book_title:
+            return book_title
+    return None
+
+def get_basket_by_user_id(user_id):
+    for basket in baskets:
+        if isinstance(basket, Basket) and basket.user_id == user_id:
+            return basket
+    return None
+
+def create_or_get_user_basket(user_id):
+    basket = get_basket_by_user_id(user_id)
+    if not basket:
+        basket_id = user_id
+        new_basket = Basket(basket_id)
+        baskets.append(new_basket)
+        save_baskets_data(baskets)
+        print(f"Naujas paskolinimų įrašas sukurtas vartotojui ID '{user_id}'.")
+        return new_basket
+    return basket
+
+def take_book(user_id, book_title, take_period_days=14 ):
+    user_basket = create_or_get_user_basket(user_id)
+    if not user_basket:
+        print("Nepavyko gauti ar sukūrti vartotojo krepšio")
+
+    book = get_book_by_title(book_title)
+    book_id = book.book_id
+    if not book_id:
+        print(f"Knyga su ID {book_id} nerasta")
+        return False
+    
+    if book.book_unit <= 0:
+        print(f"Knygos {book.book_title} šiuo metu nėra sandėlyje")
+        return False
+
+    if user_basket.
+    

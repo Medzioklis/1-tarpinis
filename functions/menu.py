@@ -79,6 +79,7 @@ def reader_menu():
         print("\n--- Skaitytojo Meniu ---")
         print("1. Peržiūrėti savo duomenis")
         print("2. Knygos paieška")
+        print("3. Paimti knygas")
         print("0. Baigti darbą")
         choice = int(input("Įveskite savo pasirinkimą: "))
 
@@ -87,11 +88,18 @@ def reader_menu():
                 view_my_data()
             case 2:
                 search_book()
+            case 3:
+                print("Knygos pasiemimas")
             case 0:
                 print("Išėjote iš programos.")
                 exit()
             case _:
                 print("Neteisingas pasirinkimas. Bandykite dar kartą.")
+
+# -------------------------------------------------------------------------
+# -------------------------- Skaitytojo -----------------------------------
+# ------------------------ Meniu valdymas ---------------------------------
+# -------------------------------------------------------------------------
 
 def view_my_data():
     if current_user:
@@ -99,6 +107,26 @@ def view_my_data():
         print(current_user)
     else:
         print("Nėra prisijungusio vartotojo.")
+
+def borrow_book():
+    global current_user
+
+    book_title = input("Įveskite knygos pavadinimą kurią norite paimti: ")
+    book_to_take = lib.get_book_by_title(book_title)
+    if not book_to_take:
+        print(f"Knyga {book_title} nerasta")
+        return
+    if book_to_take.book_unit <= 0:
+        print(f"Knygos šiuo metu nėra sandėlyje")
+        return
+    
+    lib.
+
+
+# -------------------------------------------------------------------------
+# ------------------------- Bibliotekininko -------------------------------
+# ------------------------ Vartotojo valdymas -----------------------------
+# -------------------------------------------------------------------------
 
 def create_user():
     print("\n--- Kuriame naują vartotoją ---")
@@ -145,8 +173,9 @@ def list_users():
         print("Nėra registruotų vartotojų.")
 
 # -------------------------------------------------------------------------
-# -------------------------- Knygos valdymas ------------------------------
-#--------------------------------------------------------------------------
+# ------------------------- Bibliotekininko -------------------------------
+# ------------------------- Knygos valdymas -------------------------------
+# -------------------------------------------------------------------------
 
 def create_book():
     print("\n--- Pridedame naują knygą ---")
