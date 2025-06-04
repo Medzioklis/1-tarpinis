@@ -1,14 +1,14 @@
-import pickle
 import os
+import pickle
 from datetime import datetime
 
 from classes.user import User
 from classes.book import Book
 
-users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
-books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
-# users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
-# books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
+# users_file_location = "D:/AI studijos/1 tarpinis/data/users.pickle" # namu kompe kelias iki data
+# books_file_location = "D:/AI studijos/1 tarpinis/data/books.pickle" # namu kompe kelias iki data
+users_file_location = "D:/AI studijos/1-tarpinis/data/users.pickle" # darbo kompe kelias iki data
+books_file_location = "D:/AI studijos/1-tarpinis/data/books.pickle" # darbo kompe kelias iki data
 
 def load_user_data():
     try:
@@ -186,4 +186,7 @@ def get_book_by_search(search_input):
         if book.book_title == search_input or book.book_author == search_input:
             found_books.append(book)
     return found_books
-    
+
+def get_books_by_years(year_input):
+    found_books = [book for book in books if int(book.book_release) <= int(year_input)]
+    return found_books

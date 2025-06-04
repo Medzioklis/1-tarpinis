@@ -40,8 +40,9 @@ def librarian_menu():
         print("5. Pridėti naują knygą")
         print("6. Atnaujinti knygą sąraše")
         print("7. Ištrinti knygą")
-        print("8. Peržiūrėti knygų sąrašą")
-        print("9. Knygos paieška")
+        print("8. Šalinti pasenusias knygas")
+        print("9. Peržiūrėti knygų sąrašą")
+        print("10. Knygos paieška")
         print("0. Baigti darbą")
         
         choice = int(input("Įveskite savo pasirinkimą: "))
@@ -62,8 +63,10 @@ def librarian_menu():
             case 7:
                 delete_book()
             case 8:
-                list_books()
+                delete_old_book()
             case 9:
+                list_books()
+            case 10:
                 search_book()
             case 0:
                 print("Išėjote iš programos")
@@ -218,4 +221,19 @@ def search_book():
             print("-" * 150)
             print(f"Knygos ID: {book.book_id}, pavadinimas: {book.book_title}, autorius: {book.book_author}, žanras: {book.book_genre}, sandėlyje: {book.book_unit} vnt.")
     else:
-        print(f"Knyga su pavadinimu ar autoriumi, atitinkančiu '{search_input}', nerasta.")
+        print(f"Knyga su pavadinimu ar autoriumi, atitinkančiu {search_input}, nerasta.")
+
+def delete_old_book():
+    print("\n----- Ištriname senas knygas -----")
+    year_input = input("Įveskite metus nuo kurių knyga laikoma pasenusi ir reikia ištrinti (pvz: 1970): ")
+    found_books_list = lib.get_books_by_years(year_input)
+
+    if found_books_list:
+        print("\nRastos knygos:")
+        for book in found_books_list:
+            print("-" * 150)
+            print(f"Knygos ID: {book.book_id}, pavadinimas: {book.book_title}, autorius: {book.book_author}, žanras: {book.book_genre}, sandėlyje: {book.book_unit} vnt.")
+            lib.delete_book(book.book_id)
+    else:
+        print(f"Senesnių knygų nei {year_input} metų, nerasta.")
+    
