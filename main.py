@@ -4,30 +4,22 @@ import functions.menu_functions as fm
 def main():
     fl.create_initial_fakeadmin()
 
-    print("=== Bibliotekos sistema ===")
+    print("\n======= Bibliotekos sistema =======\n")
     username = input("Įveskite kortelės numerį: ")
     password = input("Įveskite slaptažodį: ")
 
     user = fl.login(username, password)
     if user:
-        print("-" * 70)
-        print(f"Sveiki, {user.user_name}! Jūsų rolė: {user.user_role}")
+        print(f"\nSveiki, {user.user_name}! Jūsų rolė: {user.user_role}")
         print("-" * 70)
         if user.user_role == "bibliotekininkas":
             fm.librarian_menu()
         else:
-            print("Skaitytojo meniu dar kuriamas...")
+            fm.reader_menu(user)
     else:
         print("Neteisingas kortelės numeris arba slaptažodis.")
 
 main()
 
-
-# from functions.menu import login_menu
-
-# def main():
-#     login_menu()
-
-# main()
 
     

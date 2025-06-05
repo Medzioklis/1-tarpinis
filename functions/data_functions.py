@@ -52,3 +52,26 @@ def save_books(books):
             pickle.dump(books, file)
     except Exception as e:
         print(f"Klaida: {e}")
+
+# ----------------- Basket Data -------------------
+# =================================================
+
+baskets_file = "data/baskets.pickle"
+
+def load_baskets():
+    try:
+        with open(baskets_file, "rb") as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        print("Failas nerastas!")
+        return []
+    except Exception:
+        print("Krepšelių sąrašas tuščias")
+        return []
+    
+def save_baskets(baskets):
+    try:
+        with open(baskets_file, "wb") as file:
+            pickle.dump(baskets, file)
+    except Exception as e:
+        print(f"Klaida: {e}")
