@@ -83,7 +83,7 @@ def reader_menu(user):
     while True:
         print("\n=== Skaitytojo meniu ===\n")
         print("1. Peržiūrėti visas knygas")
-        print("2. Pasiskolinti knygą")
+        print("2. Paimti knygą")
         print("3. Grąžinti knygą")
         print("4. Mano pasiskolintos knygos")
         print("0. Atsijungti")

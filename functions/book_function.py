@@ -59,7 +59,7 @@ def update_book():
                         print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
                 book_release = input(f"Nauji išleidimo metai (dabar: {book.book_release}): ")
                 if book_release:
-                    book.book_realease = book_release
+                    book.book_release = book_release
                 while True:
                     try:
                         book_unit = int(input(f"Atnaujinkite vnt., skaičių (privaloma) (dabar yra: {book.book_unit} vnt.): "))
