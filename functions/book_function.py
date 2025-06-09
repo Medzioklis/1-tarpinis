@@ -32,8 +32,10 @@ def delete_book():
     books = [book for book in books if int(book.book_id) != book_id]
     if len(books) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad knyga istrinta ir galima is naujo isaugoti sarasa
         df.save_books(books)
+        print("-" * 60)
         print(f"Knyga su ID: {book_id} ištrinta")
     else:
+        print("-" * 60)
         print(f"Knyga su ID: {book_id} nerasta")
 
 
@@ -44,7 +46,7 @@ def update_book():
         for book in books:
             if int(book.book_id) == book_id:
                 book_title = input(f"Naujas pavadinimas (dabar: {book.book_title}): ")
-                if book_title:
+                if book_title and book_title != book.book_title:
                     book.book_title = book_title
                 book_author = input(f"Naujas autorius (dabar {book.book_author}): ")
                 if book_author:
@@ -57,7 +59,7 @@ def update_book():
                         print(f"Neteisingai įvedėte {book_genre} žanrą. Bandykite dar kartą")
                 book_release = input(f"Nauji išleidimo metai (dabar: {book.book_release}): ")
                 if book_release:
-                    book.book_realease = book_release
+                    book.book_release = book_release
                 while True:
                     try:
                         book_unit = int(input(f"Atnaujinkite vnt., skaičių (privaloma) (dabar yra: {book.book_unit} vnt.): "))

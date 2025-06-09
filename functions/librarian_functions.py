@@ -23,8 +23,8 @@ def create_user():
 def delete_user():
     users = df.load_users()
     original_len = len(users)
-    user_id = int(input("Įveskite vartotojo kortelės numerį, kurį norite ištrinti: "))
-    users = [user for user in users if int(user.user_id) != user_id]
+    user_id = input("Įveskite vartotojo kortelės numerį, kurį norite ištrinti: ")
+    users = [user for user in users if user.user_id != user_id]
     if len(users) < original_len:                        # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad vartotojas istrintas ir galima is naujo isaugoti sarasa
         df.save_users(users)
         print(f"Vartotojas su ID: {user_id} ištrintas.")
@@ -34,9 +34,9 @@ def delete_user():
 def update_user():
     users = df.load_users()
     try:
-        user_id = int(input("Įveskite vartotojo ID, kurį norite atnaujinti: "))
+        user_id = input("Įveskite vartotojo ID, kurį norite atnaujinti: ")
         for user in users:
-            if int(user.user_id) == user_id:
+            if user.user_id == user_id:
                 user_name = input("Naujas vartotojo vardas ir pavardė: ")
                 if user_name:
                     user.user_name = user_name
