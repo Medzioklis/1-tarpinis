@@ -28,8 +28,8 @@ def add_book():
 def delete_book():
     books = df.load_books()
     original_len = len(books)
-    book_id = int(input("Įveskite knygos ID, kurią norite ištrinti: "))
-    books = [book for book in books if int(book.book_id) != book_id]
+    book_id = input("Įveskite knygos ID, kurią norite ištrinti: ")
+    books = [book for book in books if book.book_id != book_id]
     if len(books) < original_len:                               # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad knyga istrinta ir galima is naujo isaugoti sarasa
         df.save_books(books)
         print("-" * 60)
@@ -42,9 +42,9 @@ def delete_book():
 def update_book():
     books = df.load_books()
     try:
-        book_id = int(input("Įveskite knygos ID, kurią norite atnaujinti: "))
+        book_id = input("Įveskite knygos ID, kurią norite atnaujinti: ")
         for book in books:
-            if int(book.book_id) == book_id:
+            if book.book_id == book_id:
                 book_title = input(f"Naujas pavadinimas (dabar: {book.book_title}): ")
                 if book_title and book_title != book.book_title:
                     book.book_title = book_title
