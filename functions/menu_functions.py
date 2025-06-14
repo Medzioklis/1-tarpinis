@@ -1,3 +1,6 @@
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 from . import librarian_functions as lf
 from . import book_function as bf
 from . import reader_functions as rf
@@ -5,10 +8,10 @@ from . import reader_functions as rf
 
 def librarian_menu():
     while True:
-        print("\n===== Bibliotekininko meniu =====\n")
-        print("1. Vartotojų valdymas")
-        print("2. Knygų valdymas")
-        print("0. Atsijungti")
+        print(f"{Fore.GREEN}\n===== Bibliotekininko meniu =====\n")
+        print(f"{Fore.YELLOW}1. Vartotojų valdymas")
+        print(f"{Fore.YELLOW}2. Knygų valdymas")
+        print(f"{Fore.YELLOW}0. Atsijungti")
        
         choice = int(input("Pasirinkite: "))
 
@@ -18,20 +21,20 @@ def librarian_menu():
             case 2:
                 book_management_menu()
             case 0:
-                print("Atsijungėte")
+                print(f"{Fore.GREEN}Atsijungėte")
                 exit()
             case _:
-                print("Neteisingas pasirinkimas.")
+                print(f"{Fore.RED}Neteisingas pasirinkimas.")
 
 
 def user_management_menu():
     while True:
-        print("\n======= Vartotojų valdymas =======\n")
-        print("1. Sukurti vartotoją")
-        print("2. Ištrinti vartotoją")
-        print("3. Atnaujinti vartotoją")
-        print("4. Peržiūrėti vartotojų sąrašą")
-        print("0. Grįžti į pradinį meniu")
+        print(f"{Fore.CYAN}\n======= Vartotojų valdymas =======\n")
+        print(f"{Fore.YELLOW}1. Sukurti vartotoją")
+        print(f"{Fore.YELLOW}2. Ištrinti vartotoją")
+        print(f"{Fore.YELLOW}3. Atnaujinti vartotoją")
+        print(f"{Fore.YELLOW}4. Peržiūrėti vartotojų sąrašą")
+        print(f"{Fore.YELLOW}0. Grįžti į pradinį meniu")
         
         choice = int(input("Pasirinkite: "))
 
@@ -47,18 +50,18 @@ def user_management_menu():
             case 0:
                 librarian_menu()
             case _:
-                print("Neteisingas pasirinkimas.")
+                print(f"{Fore.RED}Neteisingas pasirinkimas.")
 
 
 def book_management_menu():
     while True:
-        print("\n=========== Knygų valdymas ===========\n")
-        print("1. Pridėti knygą")
-        print("2. Ištrinti knygą")
-        print("3. Atnaujinti knygą")
-        print("4. Peržiūrėti visas knygas")
-        print("5. Ieškoti knygos pagal pavadinimą/autorių")
-        print("0. Grįžti į pradinį meniu")
+        print(f"{Fore.CYAN}\n=========== Knygų valdymas ===========\n")
+        print(f"{Fore.YELLOW}1. Pridėti knygą")
+        print(f"{Fore.YELLOW}2. Ištrinti knygą")
+        print(f"{Fore.YELLOW}3. Atnaujinti knygą")
+        print(f"{Fore.YELLOW}4. Peržiūrėti visas knygas")
+        print(f"{Fore.YELLOW}5. Ieškoti knygos pagal pavadinimą/autorių")
+        print(f"{Fore.YELLOW}0. Grįžti į pradinį meniu")
         
         choice = int(input("Pasirinkite: "))
 
@@ -76,17 +79,17 @@ def book_management_menu():
             case 0:
                 librarian_menu()
             case _:
-                print("Neteisingas pasirinkimas.")
+                print(f"{Fore.RED}Neteisingas pasirinkimas.")
 
 
 def reader_menu(user):
     while True:
-        print("\n=== Skaitytojo meniu ===\n")
-        print("1. Peržiūrėti visas knygas")
-        print("2. Paimti knygą")
-        print("3. Grąžinti knygą")
-        print("4. Mano pasiskolintos knygos")
-        print("0. Atsijungti")
+        print(f"{Fore.CYAN}\n=== Skaitytojo meniu ===\n")
+        print(f"{Fore.YELLOW}1. Peržiūrėti visas knygas")
+        print(f"{Fore.YELLOW}2. Paimti knygą")
+        print(f"{Fore.YELLOW}3. Grąžinti knygą")
+        print(f"{Fore.YELLOW}4. Mano pasiskolintos knygos")
+        print(f"{Fore.YELLOW}0. Atsijungti")
         
         choice = int(input("Pasirinkite: "))
 
@@ -101,7 +104,7 @@ def reader_menu(user):
             case 4:
                 rf.view_my_books(user)
             case 0:
-                print("Atsijungėte")
+                print(f"{Fore.GREEN}Atsijungėte")
                 exit()
             case _:
-                print("Neteisingas pasirinkimas.")
+                print(f"{Fore.RED}Neteisingas pasirinkimas.")

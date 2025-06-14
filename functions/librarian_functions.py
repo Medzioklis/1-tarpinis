@@ -1,3 +1,6 @@
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 from classes.user import User
 from . import data_functions as df
 
@@ -13,12 +16,12 @@ def create_user():
         if user_role == "skaitytojas" or user_role == "bibliotekininkas":
             break
         else:
-            print(f"Neteisingai įvedėte rolę {user_role}. Bandykite dar kartą")
+            print(f"{Fore.RED}Neteisingai įvedėte rolę {user_role}. Bandykite dar kartą")
     user = User(user_id, user_name, user_password, user_role)
     users.append(user)
     df.save_users(users)
     print("-" * 100)
-    print(f"Vartotojas: {user.user_name} sukurtas. Jo kortelės numeris yra: {user.user_id}, o slaptazodis yra: {user.user_password}")
+    print(f"{Fore.GREEN}Vartotojas: {user.user_name} sukurtas. Jo kortelės numeris yra: {user.user_id}, o slaptazodis yra: {user.user_password}")
 
 def delete_user():
     users = df.load_users()
@@ -27,9 +30,9 @@ def delete_user():
     users = [user for user in users if user.user_id != user_id]
     if len(users) < original_len:                        # tikrinam ar saraso ilgis sumazejo, jei sumazejo reiskia kad vartotojas istrintas ir galima is naujo isaugoti sarasa
         df.save_users(users)
-        print(f"Vartotojas su ID: {user_id} ištrintas.")
+        print(f"{Fore.GREEN}Vartotojas su ID: {user_id} ištrintas.")
     else:
-        print(f"Vartotojas su ID {user_id} nerastas.")
+        print(f"{Fore.RED}Vartotojas su ID {user_id} nerastas.")
 
 def update_user():
     users = df.load_users()
@@ -43,23 +46,23 @@ def update_user():
                 user_password = input("Naujas slaptažodis: ")
                 if user_password:
                     user.user_password = user_password
-                user_role = input(f"Ar keisite rolę ?(dabar {user.user_role}): ")
+                user_role = input(f"Ar keisite rolę ?(dabar {Fore.RED}{user.user_role}): ")
                 if user_role == "skaitytojas" or user_role == "bibliotekininkas":
                     user.user_role = user_role
                 df.save_users(users)
                 print("-" * 140)
-                print(f"Vartotojas: {user.user_name} atnaujintas. Kortelės numeris yra: {user.user_id}, slaptazodis yra: {user.user_password}, o rolė yra: {user.user_role}")
+                print(f"{Fore.GREEN}Vartotojas: {user.user_name} atnaujintas. Kortelės numeris yra: {user.user_id}, slaptazodis yra: {user.user_password}, o rolė yra: {user.user_role}")
                 return
-        print("Vartotojas nerastas.")
+        print(f"{Fore.RED}Vartotojas nerastas.")
     except ValueError:
-        print("Netinkamas ID formatas.")
+        print(f"{Fore.RED}Netinkamas ID formatas.")
 
 def list_users():
     users = df.load_users()
     if not users:
-        print("Vartotojų sąraše nėra.")
+        print(f"{Fore.RED}Vartotojų sąraše nėra.")
     else:
         for user in users:
-            print("-" * 100)
+            print(f"{Fore.BLUE}-" * 100)
             print(user)
-            print("-" * 100)
+            print(f"{Fore.BLUE}-" * 100)

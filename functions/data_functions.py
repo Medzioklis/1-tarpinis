@@ -1,3 +1,6 @@
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 import os
 import pickle
 from datetime import datetime
@@ -12,10 +15,10 @@ def load_users():
         with open(users_file, "rb") as file:
             return pickle.load(file)
     except FileNotFoundError:
-        print("Failas nerastas!")
+        print(f"{Fore.RED}Failas nerastas!")
         return []
     except Exception:
-        print("Vartotojų sąrašas tuščias")
+        print(f"{Fore.RED}Vartotojų sąrašas tuščias")
         return []
     
 def save_users(users):
@@ -23,7 +26,7 @@ def save_users(users):
         with open(users_file, "wb") as file:
             pickle.dump(users, file)
     except Exception as e:
-        print(f"Klaida: {e}")
+        print(f"{Fore.RED}Klaida: {e}")
 
 def get_id():
     id_int = int(datetime.now().timestamp())
@@ -40,10 +43,10 @@ def load_books():
         with open(books_file, "rb") as file:
             return pickle.load(file)
     except FileNotFoundError:
-        print("Failas nerastas!")
+        print(f"{Fore.RED}Failas nerastas!")
         return []
     except Exception:
-        print("Knygų sąrašas tuščias")
+        print(f"{Fore.RED}Knygų sąrašas tuščias")
         return []
     
 def save_books(books):
@@ -51,7 +54,7 @@ def save_books(books):
         with open(books_file, "wb") as file:
             pickle.dump(books, file)
     except Exception as e:
-        print(f"Klaida: {e}")
+        print(f"{Fore.RED}Klaida: {e}")
 
 # ----------------- Basket Data -------------------
 # =================================================
@@ -63,10 +66,10 @@ def load_baskets():
         with open(baskets_file, "rb") as file:
             return pickle.load(file)
     except FileNotFoundError:
-        print("Failas nerastas!")
+        print(f"{Fore.RED}Failas nerastas!")
         return []
     except Exception:
-        print("Krepšelių sąrašas tuščias")
+        print(f"{Fore.RED}Krepšelių sąrašas tuščias")
         return []
     
 def save_baskets(baskets):
@@ -74,4 +77,4 @@ def save_baskets(baskets):
         with open(baskets_file, "wb") as file:
             pickle.dump(baskets, file)
     except Exception as e:
-        print(f"Klaida: {e}")
+        print(f"{Fore.RED}Klaida: {e}")
