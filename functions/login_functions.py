@@ -13,4 +13,4 @@ def create_initial_fakeadmin():
     if not users:
         admin = User(user_id="admin", user_name="Administratorius", user_password="admin", user_role="bibliotekininkas")
         df.save_users([admin])
-        print(f"Programos startui sukurtas fake admin vartotojas")
+        print(f"\nProgramos startui sukurtas fake admin vartotojas")

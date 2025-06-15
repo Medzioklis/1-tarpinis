@@ -8,12 +8,12 @@ from . import reader_functions as rf
 
 def librarian_menu():
     while True:
-        print(f"{Fore.GREEN}\n===== Bibliotekininko meniu =====\n")
+        print(f"{Fore.CYAN}\n===== Bibliotekininko meniu =====\n")
         print(f"{Fore.YELLOW}1. Vartotojų valdymas")
         print(f"{Fore.YELLOW}2. Knygų valdymas")
         print(f"{Fore.YELLOW}0. Atsijungti")
        
-        choice = int(input("Pasirinkite: "))
+        choice = int(input("\nPasirinkite: "))
 
         match choice:
             case 1:
@@ -36,7 +36,7 @@ def user_management_menu():
         print(f"{Fore.YELLOW}4. Peržiūrėti vartotojų sąrašą")
         print(f"{Fore.YELLOW}0. Grįžti į pradinį meniu")
         
-        choice = int(input("Pasirinkite: "))
+        choice = int(input("\nPasirinkite: "))
 
         match choice:
             case 1:
@@ -50,7 +50,7 @@ def user_management_menu():
             case 0:
                 librarian_menu()
             case _:
-                print(f"{Fore.RED}Neteisingas pasirinkimas.")
+                print(f"\n{Fore.RED}Neteisingas pasirinkimas.")
 
 
 def book_management_menu():
@@ -63,7 +63,7 @@ def book_management_menu():
         print(f"{Fore.YELLOW}5. Ieškoti knygos pagal pavadinimą/autorių")
         print(f"{Fore.YELLOW}0. Grįžti į pradinį meniu")
         
-        choice = int(input("Pasirinkite: "))
+        choice = int(input("\nPasirinkite: "))
 
         match choice:
             case 1:
@@ -79,7 +79,7 @@ def book_management_menu():
             case 0:
                 librarian_menu()
             case _:
-                print(f"{Fore.RED}Neteisingas pasirinkimas.")
+                print(f"\n{Fore.RED}Neteisingas pasirinkimas.")
 
 
 def reader_menu(user):
@@ -91,7 +91,7 @@ def reader_menu(user):
         print(f"{Fore.YELLOW}4. Mano pasiskolintos knygos")
         print(f"{Fore.YELLOW}0. Atsijungti")
         
-        choice = int(input("Pasirinkite: "))
+        choice = int(input("\nPasirinkite: "))
 
         match choice:
 
@@ -104,7 +104,7 @@ def reader_menu(user):
             case 4:
                 rf.view_my_books(user)
             case 0:
-                print(f"{Fore.GREEN}Atsijungėte")
+                print(f"\n{Fore.GREEN}Atsijungėte")
                 exit()
             case _:
-                print(f"{Fore.RED}Neteisingas pasirinkimas.")
+                print(f"\n{Fore.RED}Neteisingas pasirinkimas.")
