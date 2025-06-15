@@ -37,7 +37,7 @@ def book_basket(user):
                 baskets.append(new_basket)
                 df.save_books(books)
                 df.save_baskets(baskets)
-                print("-" * 60)
+                print(f"{Fore.BLUE}-" * 60)
                 print(f"{Fore.GREEN}Knyga {book.book_title} paimė {user.user_name} ir privalo grąžinti iki: {Fore.MAGENTA}{(datetime.now() + timedelta(days=14)).strftime("%Y-%m-%d")}")
                 return
         print(f"\n{Fore.RED}Knyga nerasta.")
@@ -56,6 +56,7 @@ def return_book(user):
 
     print(f"\n{Fore.CYAN}Jūsų knygos:")
     for book in user_baskets:
+        print(f"{Fore.BLUE}-" * 140)
         print(book)
 
     try:

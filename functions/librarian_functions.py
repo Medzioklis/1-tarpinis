@@ -10,7 +10,7 @@ def create_user():
     users = df.load_users()
     user_id = df.get_id()
     user_name = input("\nĮveskite vartotojo vardą ir pavardę: ")
-    user_password = input("Įveskite slaptažodį: ")
+    user_password = input("\nĮveskite slaptažodį: ")
     while True:
         user_role = input("\nĮveskite rolę (skaitytojas ar bibliotekininkas): ").lower()
         if user_role == "skaitytojas" or user_role == "bibliotekininkas":
@@ -65,4 +65,4 @@ def list_users():
         for user in users:
             print(f"{Fore.BLUE}-" * 100)
             print(user)
-            print(f"{Fore.BLUE}-" * 100)
+            

@@ -88,7 +88,7 @@ def search_books():
         for book in results:
             print(f"{Fore.BLUE}-" * 140)
             print(book)
-            print(f"{Fore.BLUE}-" * 140)
+            
     else:
         print(f"{Fore.RED}Knygų nerasta.")
 
@@ -101,4 +101,4 @@ def list_books():
         for book in books:
             print(f"{Fore.BLUE}-" * 140)
             print(book)
-            print(f"{Fore.BLUE}-" * 140)
+            
